@@ -11,7 +11,7 @@ export const generatePDFReport = async (
   const contentWidth = pageWidth - margin * 2;
   let y = margin;
   const pageHeight = pdf.internal.pageSize.getHeight();
-  const bottomBarrier = pageHeight - 20; // 20mm bottom margin, like Word
+  const bottomBarrier = pageHeight - 20; 
 
   // Helper
   const addHeader = (text: string) => {

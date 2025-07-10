@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { AirVent, Calculator, Info } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import MultiStepWizard from './components/MultiStepWizard';
