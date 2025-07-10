@@ -209,21 +209,6 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Info Banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-          <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-600 mt-0.5" />
-            <div>
-              <h3 className="font-semibold text-blue-900">How It Works</h3>
-              <p className="text-blue-800 text-sm mt-1">
-                Enter your home details and select an AC unit to get accurate
-                cost projections based on real weather data, energy efficiency
-                ratings, and local conditions. Our calculator factors in
-                seasonal variations, insulation quality, and operating patterns
-                to provide comprehensive cost analysis.
-              </p>
-            </div>
-          </div>
-        </div>
 
         {/* Error Message */}
         {error && (
@@ -262,11 +247,7 @@ function App() {
         {/* Footer */}
         <footer className="mt-12 text-center text-gray-600 text-sm">
           <div className="border-t border-gray-200 pt-8">
-            <p>
-              Cost calculations are estimates based on average electricity rates
-              and typical usage patterns. Actual costs may vary based on local
-              utility rates, weather conditions, and individual usage habits.
-            </p>
+            
             <p className="mt-2">
               Weather data provided by Open-Meteo API. Location data from
               ZippopotamUS.
