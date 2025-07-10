@@ -101,6 +101,20 @@ function App() {
   };
 
   const handleStartAnalysis = () => {
+    // Reset all state for a fresh analysis
+    setInputs({
+      zipCode: "",
+      squareFootage: 2000,
+      thermostatTemp: 75,
+      seer2Rating: 16,
+      insulationQuality: "average",
+      selectedUnit: null,
+      operatingHours: 8,
+    });
+    setCalculation(null);
+    setWeatherData(null);
+    setRealTimeCosts(null);
+    setError("");
     setShowWizard(true);
   };
 
