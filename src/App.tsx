@@ -12,6 +12,9 @@ import { fetchWeatherData } from "./utils/api";
 import { calculateCosts, saveCostCalculation } from "./utils/calculations";
 import { generatePDFReport } from "./utils/pdfGenerator";
 
+// main app component
+// TODO: add error boundary wrapper
+// TODO: add loading states for better UX
 function App() {
   const [inputs, setInputs] = useState<CalculationInputs>({
     zipCode: "",
@@ -247,7 +250,6 @@ function App() {
         {/* Footer */}
         <footer className="mt-12 text-center text-gray-600 text-sm">
           <div className="border-t border-gray-200 pt-8">
-            
             <p className="mt-2">
               Weather data provided by Open-Meteo API. Location data from
               ZippopotamUS.
