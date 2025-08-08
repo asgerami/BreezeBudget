@@ -1,3 +1,4 @@
+// types for the app
 export interface ACUnit {
   id: string;
   brand: string;
@@ -12,7 +13,7 @@ export interface CalculationInputs {
   squareFootage: number;
   thermostatTemp: number;
   seer2Rating: number;
-  insulationQuality: 'poor' | 'average' | 'good' | 'excellent';
+  insulationQuality: "poor" | "average" | "good" | "excellent";
   selectedUnit: ACUnit | null;
   operatingHours: number;
 }

@@ -1,5 +1,7 @@
 import { ACUnit } from '../types';
 
+// AC unit data - prices are estimates from 2024
+// TODO: update prices and add more units
 export const acUnits: ACUnit[] = [
   // Carrier
   { id: 'carrier-1', brand: 'Carrier', model: 'Comfort 13', seer2: 13, btu: 24000, estimatedPrice: 3200 },
