@@ -22,140 +22,136 @@ const CostDisplay: React.FC<CostDisplayProps> = ({ calculation }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <DollarSign className="w-6 h-6 text-green-600" />
-        Cost Analysis Results
+    <div className="bg-surface-elevated border border-stone-200 rounded-xl p-6 mb-6">
+      <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-6 flex items-center gap-2">
+        <DollarSign className="w-6 h-6 text-accent" aria-hidden />
+        Cost analysis results
       </h2>
 
-      {/* Weather & Location Info */}
-      <div className="bg-blue-50 rounded-lg p-4 mb-6">
+      {/* Weather & location - neutral panel */}
+      <div className="bg-surface-muted border border-stone-200 rounded-lg p-4 mb-6">
         <div className="flex items-center gap-2 mb-2">
-          <Thermometer className="w-5 h-5 text-blue-600" />
-          <h3 className="font-semibold text-gray-800">Current Conditions</h3>
+          <Thermometer className="w-5 h-5 text-[var(--color-ink-muted)]" aria-hidden />
+          <h3 className="font-display font-semibold text-[var(--color-ink)] text-sm">Current conditions</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <span className="text-gray-600">Location:</span>
-            <p className="font-medium">{weatherData.location}</p>
+            <span className="text-[var(--color-ink-muted)]">Location</span>
+            <p className="font-medium text-[var(--color-ink)]">{weatherData.location}</p>
           </div>
           <div>
-            <span className="text-gray-600">Temperature:</span>
-            <p className="font-medium">{weatherData.temperature}°F</p>
+            <span className="text-[var(--color-ink-muted)]">Temperature</span>
+            <p className="font-medium text-[var(--color-ink)]">{weatherData.temperature}°F</p>
           </div>
           <div>
-            <span className="text-gray-600">Humidity:</span>
-            <p className="font-medium">{weatherData.humidity}%</p>
+            <span className="text-[var(--color-ink-muted)]">Humidity</span>
+            <p className="font-medium text-[var(--color-ink)]">{weatherData.humidity}%</p>
           </div>
         </div>
       </div>
 
-      {/* Cost Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white">
+      {/* Cost summary: one accent (monthly), rest neutral */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-surface-muted border border-stone-200 rounded-lg p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm">Daily Cost</p>
-              <p className="text-2xl font-bold">{formatCurrency(results.dailyCost)}</p>
+              <p className="text-xs font-medium text-[var(--color-ink-muted)] uppercase tracking-wider">Daily cost</p>
+              <p className="font-display text-xl font-bold text-[var(--color-ink)] mt-1">{formatCurrency(results.dailyCost)}</p>
             </div>
-            <Calendar className="w-8 h-8 text-green-200" />
+            <Calendar className="w-6 h-6 text-[var(--color-ink-muted)]" aria-hidden />
           </div>
         </div>
-
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-6 text-white">
+        <div className="bg-accent rounded-lg p-5 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm">Monthly Cost</p>
-              <p className="text-2xl font-bold">{formatCurrency(results.monthlyCost)}</p>
+              <p className="text-xs font-medium text-teal-100 uppercase tracking-wider">Monthly cost</p>
+              <p className="font-display text-xl font-bold mt-1">{formatCurrency(results.monthlyCost)}</p>
             </div>
-            <Calendar className="w-8 h-8 text-blue-200" />
+            <Calendar className="w-6 h-6 text-teal-200" aria-hidden />
           </div>
         </div>
-
-        <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
+        <div className="bg-surface-muted border border-stone-200 rounded-lg p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm">Annual Cost</p>
-              <p className="text-2xl font-bold">{formatCurrency(results.annualCost)}</p>
+              <p className="text-xs font-medium text-[var(--color-ink-muted)] uppercase tracking-wider">Annual cost</p>
+              <p className="font-display text-xl font-bold text-[var(--color-ink)] mt-1">{formatCurrency(results.annualCost)}</p>
             </div>
-            <Calendar className="w-8 h-8 text-purple-200" />
+            <Calendar className="w-6 h-6 text-[var(--color-ink-muted)]" aria-hidden />
           </div>
         </div>
       </div>
 
-      {/* Detailed Information */}
+      {/* Details - neutral, single accent for labels/icons where useful */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gray-50 rounded-lg p-4">
-          <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-600" />
-            Energy Details
+        <div className="bg-surface-muted border border-stone-200 rounded-lg p-4">
+          <h3 className="font-display font-semibold text-[var(--color-ink)] mb-4 flex items-center gap-2 text-sm">
+            <Zap className="w-5 h-5 text-[var(--color-ink-muted)]" aria-hidden />
+            Energy details
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">Daily Energy Usage:</span>
-              <span className="font-medium">{results.energyUsage.toFixed(1)} kWh</span>
+              <span className="text-[var(--color-ink-muted)]">Daily usage</span>
+              <span className="font-medium text-[var(--color-ink)]">{results.energyUsage.toFixed(1)} kWh</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Monthly Energy Usage:</span>
-              <span className="font-medium">{(results.energyUsage * 30.4).toFixed(0)} kWh</span>
+              <span className="text-[var(--color-ink-muted)]">Monthly usage</span>
+              <span className="font-medium text-[var(--color-ink)]">{(results.energyUsage * 30.4).toFixed(0)} kWh</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Annual Energy Usage:</span>
-              <span className="font-medium">{(results.energyUsage * 365).toFixed(0)} kWh</span>
+              <span className="text-[var(--color-ink-muted)]">Annual usage</span>
+              <span className="font-medium text-[var(--color-ink)]">{(results.energyUsage * 365).toFixed(0)} kWh</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">SEER2 Rating:</span>
-              <span className="font-medium">{results.efficiencyRating}</span>
+              <span className="text-[var(--color-ink-muted)]">SEER2 rating</span>
+              <span className="font-medium text-accent">{results.efficiencyRating}</span>
             </div>
           </div>
         </div>
-
-        <div className="bg-gray-50 rounded-lg p-4">
-          <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-            <Thermometer className="w-5 h-5 text-red-600" />
-            System Specifications
+        <div className="bg-surface-muted border border-stone-200 rounded-lg p-4">
+          <h3 className="font-display font-semibold text-[var(--color-ink)] mb-4 flex items-center gap-2 text-sm">
+            <Thermometer className="w-5 h-5 text-[var(--color-ink-muted)]" aria-hidden />
+            System specs
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">BTU Requirement:</span>
-              <span className="font-medium">{formatNumber(results.btuRequirement)} BTU/hr</span>
+              <span className="text-[var(--color-ink-muted)]">BTU requirement</span>
+              <span className="font-medium text-[var(--color-ink)]">{formatNumber(results.btuRequirement)} BTU/hr</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Square Footage:</span>
-              <span className="font-medium">{inputs.squareFootage.toLocaleString()} sq ft</span>
+              <span className="text-[var(--color-ink-muted)]">Square footage</span>
+              <span className="font-medium text-[var(--color-ink)]">{inputs.squareFootage.toLocaleString()} sq ft</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Insulation Quality:</span>
-              <span className="font-medium capitalize">{inputs.insulationQuality}</span>
+              <span className="text-[var(--color-ink-muted)]">Insulation</span>
+              <span className="font-medium text-[var(--color-ink)] capitalize">{inputs.insulationQuality}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Operating Hours:</span>
-              <span className="font-medium">{inputs.operatingHours} hrs/day</span>
+              <span className="text-[var(--color-ink-muted)]">Operating hours</span>
+              <span className="font-medium text-[var(--color-ink)]">{inputs.operatingHours} hrs/day</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Selected Unit Information */}
       {inputs.selectedUnit && (
-        <div className="mt-6 bg-blue-50 rounded-lg p-4">
-          <h3 className="font-semibold text-gray-800 mb-3">Selected AC Unit</h3>
+        <div className="mt-6 bg-surface-muted border border-stone-200 rounded-lg p-4">
+          <h3 className="font-display font-semibold text-[var(--color-ink)] mb-3 text-sm">Selected AC unit</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <span className="text-gray-600">Brand:</span>
-              <p className="font-medium">{inputs.selectedUnit.brand}</p>
+              <span className="text-[var(--color-ink-muted)]">Brand</span>
+              <p className="font-medium text-[var(--color-ink)]">{inputs.selectedUnit.brand}</p>
             </div>
             <div>
-              <span className="text-gray-600">Model:</span>
-              <p className="font-medium">{inputs.selectedUnit.model}</p>
+              <span className="text-[var(--color-ink-muted)]">Model</span>
+              <p className="font-medium text-[var(--color-ink)]">{inputs.selectedUnit.model}</p>
             </div>
             <div>
-              <span className="text-gray-600">SEER2:</span>
-              <p className="font-medium">{inputs.selectedUnit.seer2}</p>
+              <span className="text-[var(--color-ink-muted)]">SEER2</span>
+              <p className="font-medium text-accent">{inputs.selectedUnit.seer2}</p>
             </div>
             <div>
-              <span className="text-gray-600">Est. Price:</span>
-              <p className="font-medium">{formatCurrency(inputs.selectedUnit.estimatedPrice)}</p>
+              <span className="text-[var(--color-ink-muted)]">Est. price</span>
+              <p className="font-medium text-[var(--color-ink)]">{formatCurrency(inputs.selectedUnit.estimatedPrice)}</p>
             </div>
           </div>
         </div>

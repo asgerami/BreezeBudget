@@ -50,7 +50,7 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
 
   const handleZipChange = (value: string) => {
     onInputChange({ ...inputs, zipCode: value });
-    
+
     if (value && !validateZipCode(value)) {
       setZipError('Please enter a valid 5-digit ZIP code');
     } else {
@@ -60,8 +60,8 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
 
   const handleUnitSelection = (unitId: string) => {
     const unit = acUnits.find(u => u.id === unitId);
-    onInputChange({ 
-      ...inputs, 
+    onInputChange({
+      ...inputs,
       selectedUnit: unit || null,
       seer2Rating: unit ? unit.seer2 : inputs.seer2Rating
     });
@@ -69,7 +69,7 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
 
   const canProceed = (step: number): boolean => {
     switch (step) {
-      case 0: return inputs.zipCode && !zipError;
+      case 0: return !!inputs.zipCode && !zipError;
       case 1: return inputs.squareFootage > 0;
       case 2: return inputs.thermostatTemp >= 65 && inputs.thermostatTemp <= 85;
       case 3: return inputs.selectedUnit !== null;
@@ -96,22 +96,21 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <MapPin className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Where is your home located?</h2>
-              <p className="text-gray-600">We'll use this to get accurate weather data and electricity rates.</p>
+              <MapPin className="w-14 h-14 text-accent mx-auto mb-4" aria-hidden />
+              <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-2">Where is your home located?</h2>
+              <p className="text-[var(--color-ink-muted)]">We'll use this for weather data and electricity rates.</p>
             </div>
             <div className="max-w-md mx-auto">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                ZIP Code
+              <label className="block text-sm font-medium text-[var(--color-ink)] mb-2">
+                ZIP code
               </label>
               <input
                 type="text"
                 value={inputs.zipCode}
                 onChange={(e) => handleZipChange(e.target.value)}
-                className={`w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                  zipError ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter ZIP code (e.g., 90210)"
+                className={`w-full p-3 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors ${zipError ? 'border-red-500' : 'border-stone-300'
+                  }`}
+                placeholder="e.g. 90210"
                 maxLength={5}
               />
               {zipError && (
@@ -125,35 +124,35 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <Home className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Tell us about your home</h2>
-              <p className="text-gray-600">These details help us calculate the right AC size for your space.</p>
+              <Home className="w-14 h-14 text-accent mx-auto mb-4" aria-hidden />
+              <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-2">Tell us about your home</h2>
+              <p className="text-[var(--color-ink-muted)]">These details help us size and cost your AC.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Square Footage
+                <label className="block text-sm font-medium text-[var(--color-ink)] mb-2">
+                  Square footage
                 </label>
                 <input
                   type="number"
                   value={inputs.squareFootage}
                   onChange={(e) => onInputChange({ ...inputs, squareFootage: Number(e.target.value) })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="Enter square footage"
+                  className="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="e.g. 2000"
                   min="500"
                   max="10000"
                 />
-                <p className="text-gray-500 text-sm mt-1">Range: 500 - 10,000 sq ft</p>
+                <p className="text-[var(--color-ink-muted)] text-sm mt-1">500 – 10,000 sq ft</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  Insulation Quality
+                <label className="block text-sm font-medium text-[var(--color-ink)] mb-2 flex items-center gap-2">
+                  <Shield className="w-4 h-4" aria-hidden />
+                  Insulation quality
                 </label>
                 <select
                   value={inputs.insulationQuality}
                   onChange={(e) => onInputChange({ ...inputs, insulationQuality: e.target.value as any })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                 >
                   <option value="poor">Poor - Old/minimal insulation</option>
                   <option value="average">Average - Standard insulation</option>
@@ -169,41 +168,41 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <Thermometer className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Comfort preferences</h2>
-              <p className="text-gray-600">Set your ideal temperature and usage patterns.</p>
+              <Thermometer className="w-14 h-14 text-accent mx-auto mb-4" aria-hidden />
+              <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-2">Comfort preferences</h2>
+              <p className="text-[var(--color-ink-muted)]">Set temperature and usage.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Desired Temperature (°F)
+                <label className="block text-sm font-medium text-[var(--color-ink)] mb-2">
+                  Desired temperature (°F)
                 </label>
                 <input
                   type="number"
                   value={inputs.thermostatTemp}
                   onChange={(e) => onInputChange({ ...inputs, thermostatTemp: Number(e.target.value) })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="Enter desired temperature"
+                  className="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="e.g. 75"
                   min="65"
                   max="85"
                 />
-                <p className="text-gray-500 text-sm mt-1">Range: 65°F - 85°F</p>
+                <p className="text-[var(--color-ink-muted)] text-sm mt-1">65 – 85°F</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  Operating Hours per Day
+                <label className="block text-sm font-medium text-[var(--color-ink)] mb-2 flex items-center gap-2">
+                  <Clock className="w-4 h-4" aria-hidden />
+                  Operating hours per day
                 </label>
                 <input
                   type="number"
                   value={inputs.operatingHours}
                   onChange={(e) => onInputChange({ ...inputs, operatingHours: Number(e.target.value) })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="Enter hours per day"
+                  className="w-full p-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="e.g. 8"
                   min="1"
                   max="24"
                 />
-                <p className="text-gray-500 text-sm mt-1">Range: 1 - 24 hours</p>
+                <p className="text-[var(--color-ink-muted)] text-sm mt-1">1 – 24 hours</p>
               </div>
             </div>
           </div>
@@ -213,34 +212,28 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <Zap className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Choose your AC unit</h2>
-              <p className="text-gray-600">Select from popular brands and models with different efficiency ratings.</p>
+              <Zap className="w-14 h-14 text-accent mx-auto mb-4" aria-hidden />
+              <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-2">Choose your AC unit</h2>
+              <p className="text-[var(--color-ink-muted)]">Select a brand and model to compare.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
               {acUnits.map((unit) => (
-                <div
+                <button
                   key={unit.id}
+                  type="button"
                   onClick={() => handleUnitSelection(unit.id)}
-                  className={`p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
-                    inputs.selectedUnit?.id === unit.id
-                      ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                  className={`p-4 border rounded-lg text-left transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${inputs.selectedUnit?.id === unit.id
+                      ? 'border-accent bg-accent-muted ring-1 ring-accent'
+                      : 'border-stone-200 hover:border-stone-300 bg-surface-elevated'
+                    }`}
                 >
-                  <div className="flex flex-col">
-                    <h3 className="font-semibold text-gray-800">{unit.brand}</h3>
-                    <p className="text-sm text-gray-600">{unit.model}</p>
-                    <div className="mt-2 flex justify-between items-center">
-                      <span className="text-sm font-medium text-blue-600">
-                        SEER2: {unit.seer2}
-                      </span>
-                      <span className="text-sm text-gray-500">
-                        ${unit.estimatedPrice.toLocaleString()}
-                      </span>
-                    </div>
+                  <h3 className="font-display font-semibold text-[var(--color-ink)]">{unit.brand}</h3>
+                  <p className="text-sm text-[var(--color-ink-muted)]">{unit.model}</p>
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-sm font-medium text-accent">SEER2: {unit.seer2}</span>
+                    <span className="text-sm text-[var(--color-ink-muted)]">${unit.estimatedPrice.toLocaleString()}</span>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -250,56 +243,56 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Review your configuration</h2>
-              <p className="text-gray-600">Check your settings before calculating costs.</p>
+              <CheckCircle className="w-14 h-14 text-accent mx-auto mb-4" aria-hidden />
+              <h2 className="font-display text-2xl font-bold text-[var(--color-ink)] mb-2">Review your configuration</h2>
+              <p className="text-[var(--color-ink-muted)]">Check settings, then run the calculation.</p>
             </div>
-            <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg p-6">
+            <div className="max-w-2xl mx-auto bg-surface-muted border border-stone-200 rounded-lg p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-2">Location & Home</h3>
-                  <p className="text-sm text-gray-600">ZIP Code: {inputs.zipCode}</p>
-                  <p className="text-sm text-gray-600">Square Footage: {inputs.squareFootage.toLocaleString()} sq ft</p>
-                  <p className="text-sm text-gray-600">Insulation: {inputs.insulationQuality}</p>
+                  <h3 className="font-display font-semibold text-[var(--color-ink)] mb-2 text-sm">Location & home</h3>
+                  <p className="text-sm text-[var(--color-ink-muted)]">ZIP: {inputs.zipCode}</p>
+                  <p className="text-sm text-[var(--color-ink-muted)]">{inputs.squareFootage.toLocaleString()} sq ft</p>
+                  <p className="text-sm text-[var(--color-ink-muted)] capitalize">Insulation: {inputs.insulationQuality}</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-2">Preferences</h3>
-                  <p className="text-sm text-gray-600">Temperature: {inputs.thermostatTemp}°F</p>
-                  <p className="text-sm text-gray-600">Operating Hours: {inputs.operatingHours} hrs/day</p>
+                  <h3 className="font-display font-semibold text-[var(--color-ink)] mb-2 text-sm">Preferences</h3>
+                  <p className="text-sm text-[var(--color-ink-muted)]">{inputs.thermostatTemp}°F</p>
+                  <p className="text-sm text-[var(--color-ink-muted)]">{inputs.operatingHours} hrs/day</p>
                 </div>
                 {inputs.selectedUnit && (
                   <div className="md:col-span-2">
-                    <h3 className="font-semibold text-gray-800 mb-2">Selected AC Unit</h3>
-                    <div className="bg-white rounded-lg p-4">
-                      <p className="font-medium">{inputs.selectedUnit.brand} {inputs.selectedUnit.model}</p>
-                      <div className="flex justify-between mt-2">
-                        <span className="text-sm text-blue-600">SEER2: {inputs.selectedUnit.seer2}</span>
-                        <span className="text-sm text-gray-500">${inputs.selectedUnit.estimatedPrice.toLocaleString()}</span>
+                    <h3 className="font-display font-semibold text-[var(--color-ink)] mb-2 text-sm">Selected unit</h3>
+                    <div className="bg-surface-elevated border border-stone-200 rounded-lg p-4">
+                      <p className="font-medium text-[var(--color-ink)]">{inputs.selectedUnit.brand} {inputs.selectedUnit.model}</p>
+                      <div className="flex justify-between mt-2 text-sm">
+                        <span className="text-accent font-medium">SEER2: {inputs.selectedUnit.seer2}</span>
+                        <span className="text-[var(--color-ink-muted)]">${inputs.selectedUnit.estimatedPrice.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
             </div>
-            <div className="text-center">
+            <div className="text-center mt-6">
               <button
+                type="button"
                 onClick={onCalculate}
                 disabled={isCalculating}
-                className={`px-8 py-3 rounded-lg font-semibold text-white transition-all duration-200 flex items-center gap-2 mx-auto ${
-                  !isCalculating
-                    ? 'bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl'
-                    : 'bg-gray-400 cursor-not-allowed'
-                }`}
+                className={`px-8 py-3 rounded-lg font-semibold text-white transition-colors flex items-center gap-2 mx-auto focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${!isCalculating
+                    ? 'bg-accent hover:bg-accent-hover'
+                    : 'bg-stone-400 cursor-not-allowed'
+                  }`}
               >
                 {isCalculating ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Calculating...
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+                    Calculating…
                   </>
                 ) : (
                   <>
-                    <Zap className="w-5 h-5" />
-                    Calculate Costs
+                    <Zap className="w-5 h-5" aria-hidden />
+                    Calculate costs
                   </>
                 )}
               </button>
@@ -313,43 +306,38 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-      {/* Progress Bar */}
+    <div className="bg-surface-elevated border border-stone-200 rounded-xl p-6 mb-6">
+      {/* Progress */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isActive = index === currentStep;
             const isCompleted = index < currentStep;
-            const canAccess = index <= currentStep;
-            
             return (
               <div key={step.id} className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                    isCompleted
-                      ? 'bg-green-500 text-white'
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${isCompleted
+                      ? 'bg-accent text-white'
                       : isActive
-                      ? 'bg-blue-600 text-white'
-                      : canAccess
-                      ? 'bg-gray-200 text-gray-600'
-                      : 'bg-gray-100 text-gray-400'
-                  }`}
+                        ? 'bg-accent text-white'
+                        : 'bg-surface-muted text-[var(--color-ink-muted)] border border-stone-200'
+                    }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-5 h-5" aria-hidden />
                 </div>
-                <span className={`text-xs mt-1 ${isActive ? 'text-blue-600 font-medium' : 'text-gray-500'}`}>
+                <span className={`text-xs mt-1 ${isActive ? 'text-accent font-medium' : 'text-[var(--color-ink-muted)]'}`}>
                   {step.title}
                 </span>
               </div>
             );
           })}
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-stone-200 rounded-full h-1.5">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            className="bg-accent h-1.5 rounded-full transition-all duration-300"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          ></div>
+          />
         </div>
       </div>
 
@@ -360,55 +348,53 @@ const MultiStepWizard: React.FC<MultiStepWizardProps> = ({
             {renderStepContent()}
           </div>
         </div>
-        
-        {/* Sidebar with helpful information */}
+
+        {/* Sidebar - single neutral style, no rainbow */}
         <div className="space-y-4">
           {currentStep === 3 && (
             <ColorLegend type="efficiency" />
           )}
-          
-          <div className="bg-blue-50 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 mb-2">💡 Helpful Tip</h4>
-            <p className="text-sm text-blue-800">
+          <div className="bg-surface-muted border border-stone-200 rounded-lg p-4">
+            <h4 className="font-display font-semibold text-[var(--color-ink)] mb-2 text-sm">Tip</h4>
+            <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
               {getHelpfulTip(currentStep)}
             </p>
           </div>
-          
-          <div className="bg-green-50 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 mb-2">✅ Why This Matters</h4>
-            <p className="text-sm text-green-800">
+          <div className="bg-surface-muted border border-stone-200 rounded-lg p-4">
+            <h4 className="font-display font-semibold text-[var(--color-ink)] mb-2 text-sm">Why it matters</h4>
+            <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
               {getWhyItMatters(currentStep)}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation - secondary left, primary right */}
       {currentStep < 4 && (
         <div className="flex justify-between mt-8">
           <button
+            type="button"
             onClick={prevStep}
             disabled={currentStep === 0}
-            className={`px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
-              currentStep === 0
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+            className={`px-5 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${currentStep === 0
+                ? 'bg-surface-muted text-stone-400 cursor-not-allowed'
+                : 'bg-surface-muted border border-stone-200 text-[var(--color-ink)] hover:bg-stone-100'
+              }`}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" aria-hidden />
             Previous
           </button>
           <button
+            type="button"
             onClick={nextStep}
             disabled={!canProceed(currentStep)}
-            className={`px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
-              canProceed(currentStep)
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
+            className={`px-5 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${canProceed(currentStep)
+                ? 'bg-accent text-white hover:bg-accent-hover'
+                : 'bg-surface-muted text-stone-400 cursor-not-allowed'
+              }`}
           >
             Next
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden />
           </button>
         </div>
       )}

@@ -42,7 +42,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
       try {
         const data = await generateCostProjections(inputs, weatherData);
         setProjections(data);
-        
+
         // Calculate SEER comparison data asynchronously
         const seerValues = [13, 14, 15, 16, 17, 18, 19, 20, 21];
         const seerPromises = seerValues.map(async (seer) => {
@@ -51,7 +51,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
           const annualCost = projections.reduce((sum, p) => sum + p.cost, 0);
           return { seer, annualCost };
         });
-        
+
         const seerResults = await Promise.all(seerPromises);
         setSeerComparisonData(seerResults);
       } catch (error) {
@@ -102,19 +102,52 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
     ],
   };
 
-  const chartOptions = {
+  const baseChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
       },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  const costChartOptions = {
+    ...baseChartOptions,
+    plugins: {
+      ...baseChartOptions.plugins,
       tooltip: {
         callbacks: {
-          label: function(context: any) {
-            if (context.dataset.label?.includes('Cost')) {
-              return `${context.dataset.label}: $${context.parsed.y.toFixed(2)}`;
-            }
+          label: function (context: any) {
+            return `${context.dataset.label}: $${context.parsed.y.toFixed(2)}`;
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        ...baseChartOptions.scales.y,
+        ticks: {
+          callback: function (value: any) {
+            return typeof value === 'number' ? `$${value.toFixed(0)}` : value;
+          },
+        },
+      },
+    },
+  };
+
+  const usageChartOptions = {
+    ...baseChartOptions,
+    plugins: {
+      ...baseChartOptions.plugins,
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
             return `${context.dataset.label}: ${context.parsed.y.toFixed(1)} kWh`;
           },
         },
@@ -122,14 +155,10 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        ...baseChartOptions.scales.y,
         ticks: {
-          callback: function(value: any) {
-            return typeof value === 'number' ? 
-              (this.chart?.data?.datasets?.[0]?.label?.includes('Cost') ? 
-                `$${value.toFixed(0)}` : 
-                `${value.toFixed(0)}`) : 
-              value;
+          callback: function (value: any) {
+            return typeof value === 'number' ? `${value.toFixed(0)} kWh` : value;
           },
         },
       },
@@ -164,7 +193,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
             Monthly Cost Projection
           </h3>
           <div className="h-64">
-            <Line data={lineChartData} options={chartOptions} />
+            <Line data={lineChartData} options={costChartOptions} />
           </div>
         </div>
 
@@ -175,7 +204,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
             Monthly Energy Usage
           </h3>
           <div className="h-64">
-            <Bar data={barChartData} options={chartOptions} />
+            <Bar data={barChartData} options={usageChartOptions} />
           </div>
         </div>
 
@@ -186,11 +215,11 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
             SEER2 Rating Cost Comparison (Annual)
           </h3>
           <div className="h-64">
-            <Bar data={seerChartData} options={chartOptions} />
+            <Bar data={seerChartData} options={costChartOptions} />
           </div>
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-800">
-              <strong>Tip:</strong> Higher SEER2 ratings mean better energy efficiency and lower operating costs. 
+              <strong>Tip:</strong> Higher SEER2 ratings mean better energy efficiency and lower operating costs.
               While higher-rated units cost more upfront, they can save money in the long run through reduced energy bills.
             </p>
           </div>
@@ -202,7 +231,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
         <div className="bg-blue-50 rounded-lg p-4 text-center">
           <p className="text-sm text-blue-600 font-medium">Peak Month</p>
           <p className="text-xl font-bold text-blue-800">
-            {projections.reduce((peak, current) => 
+            {projections.reduce((peak, current) =>
               current.cost > peak.cost ? current : peak
             ).month}
           </p>
@@ -210,7 +239,7 @@ const CostChart: React.FC<CostChartProps> = ({ inputs, weatherData }) => {
         <div className="bg-green-50 rounded-lg p-4 text-center">
           <p className="text-sm text-green-600 font-medium">Lowest Month</p>
           <p className="text-xl font-bold text-green-800">
-            {projections.reduce((low, current) => 
+            {projections.reduce((low, current) =>
               current.cost < low.cost ? current : low
             ).month}
           </p>

@@ -166,32 +166,11 @@ const InteractiveSliders: React.FC<InteractiveSlidersProps> = ({
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg">
         <p className="text-sm text-blue-800">
-          <strong>Tip:</strong> Adjust the sliders above to see how different settings affect your energy costs in real-time. 
+          <strong>Tip:</strong> Adjust the sliders above to see how different settings affect your energy costs in real-time.
           Lower thermostat settings and higher SEER2 ratings generally reduce costs, while larger homes and longer operating hours increase them.
         </p>
       </div>
 
-      <style jsx>{`
-        .slider-thumb::-webkit-slider-thumb {
-          appearance: none;
-          height: 20px;
-          width: 20px;
-          border-radius: 50%;
-          background: #3b82f6;
-          cursor: pointer;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .slider-thumb::-moz-range-thumb {
-          height: 20px;
-          width: 20px;
-          border-radius: 50%;
-          background: #3b82f6;
-          cursor: pointer;
-          border: none;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-      `}</style>
     </div>
   );
 };

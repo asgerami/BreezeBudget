@@ -49,27 +49,25 @@ const ColorLegend: React.FC<ColorLegendProps> = ({ type, className = '' }) => {
   const legend = legends[type];
 
   return (
-    <div className={`bg-white rounded-lg border border-gray-200 p-4 ${className}`}>
+    <div className={`bg-surface-elevated rounded-lg border border-stone-200 p-4 ${className}`}>
       <div className="flex items-center gap-2 mb-3">
-        <Info className="w-4 h-4 text-gray-600" />
-        <h4 className="font-medium text-gray-800">{legend.title}</h4>
+        <Info className="w-4 h-4 text-[var(--color-ink-muted)]" aria-hidden />
+        <h4 className="font-display font-semibold text-[var(--color-ink)] text-sm">{legend.title}</h4>
       </div>
-      
       <div className="space-y-2">
         {legend.items.map((item, index) => (
           <div key={index} className="flex items-center gap-3">
-            <div className={`w-4 h-4 rounded ${item.color}`}></div>
+            <div className={`w-4 h-4 rounded ${item.color}`} aria-hidden />
             <div className="flex-1">
-              <span className="text-sm font-medium text-gray-700">{item.label}</span>
-              <span className="text-xs text-gray-500 ml-2">({item.range})</span>
+              <span className="text-sm font-medium text-[var(--color-ink)]">{item.label}</span>
+              <span className="text-xs text-[var(--color-ink-muted)] ml-2">({item.range})</span>
             </div>
           </div>
         ))}
       </div>
-      
-      <div className="mt-3 pt-3 border-t border-gray-200">
-        <p className="text-xs text-gray-600">
-          Colors help you quickly identify patterns and make comparisons across different scenarios.
+      <div className="mt-3 pt-3 border-t border-stone-200">
+        <p className="text-xs text-[var(--color-ink-muted)]">
+          Use the scale to compare scenarios at a glance.
         </p>
       </div>
     </div>

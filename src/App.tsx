@@ -140,39 +140,28 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-      {/* PDF Download Button - Fixed Position */}
+    <div className="min-h-screen bg-surface">
+      {/* PDF Download - Fixed */}
       {calculation && (
         <div className="fixed top-4 right-4 z-50">
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-white shadow-lg transition-all duration-200 ${
-              isGeneratingPDF
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700 hover:shadow-xl transform hover:-translate-y-0.5"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${isGeneratingPDF
+                ? "bg-stone-400 cursor-not-allowed"
+                : "bg-accent hover:bg-accent-hover"
+              }`}
             title="Download your results as PDF"
           >
             {isGeneratingPDF ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                <span className="text-sm">Generating...</span>
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                <span className="text-sm">Generating…</span>
               </>
             ) : (
               <>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 <span className="text-sm">Download PDF</span>
               </>
@@ -181,30 +170,31 @@ function App() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      {/* Header - compact, clear separation */}
+      <header className="bg-surface-elevated border-b border-stone-200 h-14 flex items-center">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-3 cursor-pointer"
+            <button
+              type="button"
               onClick={() => setShowWizard(false)}
+              className="flex items-center gap-3 text-left focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-lg"
             >
-              <div className="p-2 bg-blue-600 rounded-lg">
-                <AirVent className="w-6 h-6 text-white" />
+              <div className="p-1.5 bg-accent rounded-lg text-white">
+                <AirVent className="w-5 h-5" aria-hidden />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="font-display text-lg font-bold text-[var(--color-ink)]">
                   Breeze-Budget
                 </h1>
-                <p className="text-sm text-gray-600">
-                  Smarter Home Cooling Cost Analysis
+                <p className="text-xs text-[var(--color-ink-muted)]">
+                  Cooling cost analysis
                 </p>
               </div>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Calculator className="w-4 h-4" />
-              <span>Smart Energy Analysis</span>
-            </div>
+            </button>
+            <span className="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+              <Calculator className="w-4 h-4" aria-hidden />
+              Smart energy analysis
+            </span>
           </div>
         </div>
       </header>
@@ -213,15 +203,11 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Info Banner */}
 
-        {/* Error Message */}
+        {/* Error - semantic red, icon + message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">!</span>
-              </div>
-              <p className="text-red-800">{error}</p>
-            </div>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex items-start gap-3" role="alert">
+            <span className="w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center shrink-0 text-xs font-bold" aria-hidden>!</span>
+            <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
         <MultiStepWizard
@@ -247,17 +233,9 @@ function App() {
           </div>
         )}
 
-        {/* Footer */}
-        <footer className="mt-12 text-center text-gray-600 text-sm">
-          <div className="border-t border-gray-200 pt-8">
-            <p className="mt-2">
-              Weather data provided by Open-Meteo API. Location data from
-              ZippopotamUS.
-            </p>
-            <p className="mt-2 font-semibold">
-              Breeze-Budget &copy; {new Date().getFullYear()}
-            </p>
-          </div>
+        <footer className="mt-12 pt-8 border-t border-stone-200 text-center text-sm text-[var(--color-ink-muted)]">
+          <p>Weather data: Open-Meteo. Location: ZippopotamUS.</p>
+          <p className="mt-1 font-medium text-[var(--color-ink)]">Breeze-Budget &copy; {new Date().getFullYear()}</p>
         </footer>
       </main>
     </div>
